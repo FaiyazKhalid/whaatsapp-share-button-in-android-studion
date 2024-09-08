@@ -1,0 +1,30 @@
+ val context = LocalContext.current
+
+        Column {
+            SectionHeading(text = "Wish Me")
+            CustomCard(
+                onClick = { onArticleClicked.invoke(featuredArticle) }
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    featuredArticle.wish?.let {
+                        Text(text = it)
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Button(onClick = {
+                        val phoneNumber = featuredArticle.num // Replace with the desired phone number
+                        val message = featuredArticle.news // Replace with the desired message
+                        val uri = Uri.parse("whatsapp://send?phone=$phoneNumber&text=$message")
+                        val shareIntent = Intent(Intent.ACTION_VIEW, uri)
+                        context.startActivity(shareIntent)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Whatsapp,
+                            contentDescription = "Share on WhatsApp"
+                        )
+                    }
+                }
+            }
+        }
+
